@@ -1,7 +1,7 @@
 #Define Path 
-load_path = "/a/yu-yamaoka/Scientific_reports/DINO_Output/TRAIN_CP_20231201_111120_Ours4MinSize=40_Crop=64_FromPreTrainModel/epoch55_output"
+load_path = "/a/yu-yamaoka/Scientific_reports/DINO_Output/TRAIN_CP_20231201_111120_Ours4MinSize=40_Crop=64_FromPreTrainModel/epoch55_output_color"
 save_path = load_path
-data_num = 1000
+data_num = 10000
 random_seed = 42
 
 train_image_path = "/a/yu-yamaoka/Scientific_reports/Crop_Data/DINO_INPUT_0108/TRAIN_GroundTrueModel_ver3MinSize=40_Crop=64"
@@ -27,7 +27,7 @@ class ReturnIndexDataset(datasets.ImageFolder):
 
 # Visualization
 # カスタムカラーマップの作成
-custom_colors = ['gray', 'green', 'violet', 'mediumturquoise', 'black', 'gainsboro', 'whitesmoke', 'lightgreen', 'magenta', 'darkcyan' ]
+custom_colors = ['gray', 'green', 'violet', 'mediumturquoise', 'blue', 'orange', 'pink', 'red', 'gray', 'yellow' ]
 color_map = ListedColormap(custom_colors)
 
 # タグのマッピング
@@ -37,12 +37,12 @@ class_to_tag = {
     1: 'Day3',
     2: 'Day5',
     3: 'Day7',
-    4: 'Day0-test',
-    7: 'Day3-test',
-    8: 'Day5-test',
-    9: 'Day7-test',
-    5: 'Day11-test',
-    6: 'Day14-test',
+    4: 'blue',
+    7: 'red',
+    8: 'white',
+    9: 'yellow',
+    5: 'orange',
+    6: 'pink',
     # Add more mappings if needed
 }
 
@@ -63,7 +63,7 @@ def umap_visualization(data, label, filename, image_names=None):
     
     # カスタムカラーマップを使用してデータをプロット
     for class_label in np.unique(label):
-        plt.scatter(embedding[label == class_label, 0], embedding[label == class_label, 1],
+        plt.scatter(embedding[label == class_label, 0], embedding[label == class_label, 1], s=1,
                     c=[color_map(class_label)], label=f'{class_to_tag[class_label]}')
     
     plt.legend()
